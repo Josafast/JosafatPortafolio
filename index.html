@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Calculadora</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie-edge">
 	<link rel="shortcut icon" type="image/icon" href="images/icons/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<title>Lista de tareas</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="body">
 
 	<section class="about">
-		<a class="repo" href="https://github.com/Josafast/TaskToDo" target="_BLANK"><img src="images/icons/logo-github.svg"></a>
-		<img src="images/svg/close.svg" class="close">
+		<p>Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b></p>
 		<a href="https://github.com/Josafast" target="_BLANK"><img src="images/icons/jfastSFX.svg"></a>
-		<p class="copyright"></p>
+		<a href="https://github.com/Josafast/Calculator"><img src="images/icons/logo-github.svg"></a>
 	</section>
-	<div class="table">
-		<section class="date">
-			<h1 class="dia">00</h1>
-			<h2 style="padding:10px 3px;font-weight:bold;" class="mes">Mes</h2>
-			<h2 style="padding:10px 0" class="año">Año</h2>
-		</section>
-		<h2 class="week">Semana</h2>
-		<section class="adder">
-			<input type="text" class="text">
-			<button class="add"></button>
-			<button class="delete"></button>
-		</section>
-		<section class="list">
-			<h2 class="not-have"></h2>
-		</section>
-		<span class="show-about">
-			<img src="images/svg/help-outline.svg">
-		</span>
+	<span class="darkMode">
+		<img src="images/svg/sunny.svg">
+		<img src="images/svg/moon.svg">
+	</span>
+	<span class="about-button">
+		<img src="images/svg/help-outline.svg">
+		<img src="images/svg/close.svg">
+	</span>
+	<div class="calculator">
+		<input type="text" class="text" id="text" readonly="readonly">
+		<button class="buttons">√</button>
+		<button class="buttons">³√</button>
+		<button class="buttons">xⁿ</button>
+		<button class="buttons">÷</button>
+		<button class="buttons">7</button>
+		<button class="buttons">8</button>
+		<button class="buttons">9</button>
+		<button class="buttons">*</button>
+		<button class="buttons">4</button>
+		<button class="buttons">5</button>
+		<button class="buttons">6</button>
+		<button class="buttons">-</button>
+		<button class="buttons">1</button>
+		<button class="buttons">2</button>
+		<button class="buttons">3</button>
+		<button class="buttons">+</button>
+		<button class="buttons">±</button>
+		<button class="buttons">0</button>
+		<button class="buttons">.</button>
+		<button class="buttons">=</button>
+		<button class="buttons">()</button>
+		<button class="buttons">C</button>
+		<button class="buttons" id="BACK"><img src="images/svg/backspace.svg"></button>
 	</div>
 
-  	<script type="text/javascript" src="js/main.js"></script>
-
+	<script src="js/main.js"></script>
 </body>
 </html>
