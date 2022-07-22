@@ -25,6 +25,7 @@ function operaciones(){
 
 	let operation = 
 	{
+		reboot: false,
 		parenthesis: true,
 		simbol:false,
 		decimal:true,
@@ -77,21 +78,26 @@ function result(){
 				text.value = text.value.indexOf(".") ? text.value.split(".")[0] + "." + Ei : text.value;	
 				valor1 = text.value;
 			}
-		} catch (e) {}			
+		} catch (e) {}
+		
+		operation['reboot'] = true;
 }
 
 function number(num){
 	let array = ["⁰","¹","ᒾ","³","⁴","⁵","⁶","⁷","⁸","⁹"];
 
 	if (operation["numberVia"] == true) {
+		if (operation['reboot']) text.value='';
+
 		if(operation["exponent"] == true){
 			operation["decimal"] = false;
 			text.value += array[num];
 		} else {
 			text.value += num;
 		}
-	operation["simbol"] = true;
-	lastText = "";
+		operation["simbol"] = true;
+		operation['reboot'] = false;
+		lastText = "";
 	}
 }
 
@@ -103,6 +109,7 @@ function simbol(sim){
 		operation["decimal"] = true;
 		operation["exponent"] = false;
 		operation["numberVia"] = true;
+		operation['reboot'] = false;
 	}
 }
 
@@ -110,6 +117,7 @@ function guardar(){
 	buttons.forEach(button=>{
 		button.addEventListener("click",()=>{
 			if (button.textContent == "√"){
+				operation['reboot'] = false;
 				if (operation["sqcb"] == false){
 					operation["sqcb"] = true;
 					operation["parenthesis"] = false;
@@ -121,6 +129,7 @@ function guardar(){
 					operation["numberVia"] = false;
 				}
 			} else if (button.textContent == "³√"){
+				operation['reboot'] = false;
 				if (operation["sqcb"] == false){
 					operation["sqcb"] = true;
 					operation["parenthesis"] = false;
@@ -171,6 +180,7 @@ function guardar(){
 				operation["simbol"] = false;
 				operation["decimal"] = true;
 				operation["sqcb"] = false;
+				operation['reboot'] = false;
 				text.value = "";
 			} else if (button.id == "BACK"){
 				text.value = text.value.substring(0,text.value.length-1);
@@ -179,6 +189,7 @@ function guardar(){
 				operation["sqcb"] = false;
 				operation["parenthesis"] = operation["parenthesis"] == true ? false : true;
 				operation["numberVia"] = operation["parenthesis"] == true ? false : true; 
+				operation['reboot'] = false;
 			} 
 
 			if (text.value != "") {
