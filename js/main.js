@@ -5,14 +5,9 @@ function operaciones(){
 	document.querySelector(".about").firstElementChild.innerHTML = language == "es" ? `Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b>` : `Copyright "Ionic" and the use of its icons "Ion-icons" &#169; <b class="year"></b>`;
 	document.querySelector(".year").innerHTML = new Date().getFullYear();
 
-	if (document.body.clientWidth <= 460) {
-		document.querySelector(".darkMode").setAttribute("style",`width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;`);
-		document.querySelector(".about-button").setAttribute("style",`width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;`);
-	}
-	else {
-		document.querySelector(".about-button").removeAttribute("style");
-		document.querySelector(".darkMode").removeAttribute("style");
-	}
+	
+	document.querySelector(".darkMode").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
+	document.querySelector(".about-button").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
 
 	document.querySelector(".about-button").addEventListener("click",()=>{
 		document.querySelector(".about").classList.toggle("showed");
@@ -23,23 +18,23 @@ function operaciones(){
 		localStorage.setItem("DarkMode",localStorage.getItem("DarkMode") == "false" ? "true" : "false");
 	});
 
-	let operation = 
-	{
-		reboot: false,
-		parenthesis: true,
-		simbol:false,
+	let operation = {
 		decimal:true,
-		exponent:false,
-		numberVia:true,
+    exponent:false,
+    numberVia:true,
+    lastText: '',
+    parenthesis: true,
+    reboot: false,
+		simbol:false,
 		sqcb:false
 	};
-	let aux = true;
-	let lastText = "";
+
 	let text = document.getElementById("text");
 	let buttons = document.querySelectorAll(".buttons");
 
 function result(){
-	operation["exponent"] = false;
+	operation.parenthesis = true;
+	operation.exponent = false;
 		let valor1 = "";
 		let regex = /[⁰¹ᒾ³⁴⁵⁶⁷⁸⁹]/i;
 		let regex2 = /[+-/*÷]/i;
@@ -55,7 +50,7 @@ function result(){
 			(text.value[i].search(regex2) == -1 && (text.value[i+1] == "(" || text.value[i+1] == "√")) ? `${text.value[i]}*` :
 			text.value[i]; 
 		}
-		console.log(valor1);
+
 		try {
 			valor1 = eval(valor1);
 		} catch (e) {
@@ -65,8 +60,7 @@ function result(){
 				valor1 = eval(valor1);
 			}
 		}
-		console.log(valor1);
-		lastText = "";
+		operation.lastText = "";
 		text.value = valor1.toString() == "Infinity" ? "Not calculable" : valor1;
 
 		valor1 = text.value;
@@ -80,71 +74,64 @@ function result(){
 			}
 		} catch (e) {}
 		
-		operation['reboot'] = true;
+		operation.reboot = true;
 }
 
 function number(num){
 	let array = ["⁰","¹","ᒾ","³","⁴","⁵","⁶","⁷","⁸","⁹"];
+      
+  if (operation.numberVia) {
+    operation.parenthesis = operation.parenthesis === 'med' ? false : operation.parenthesis ;
+    operation.simbol = true; operation.lastText = '';
 
-	if (operation["numberVia"] == true) {
-		if (operation['reboot']) text.value='';
-
-		if(operation["exponent"] == true){
-			operation["decimal"] = false;
-			text.value += array[num];
-		} else {
-			text.value += num;
+  	if (operation.reboot) {
+			if(!operation.exponent){
+				text.value = '';
+			} 
+			operation.reboot = false;
 		}
-		operation["simbol"] = true;
-		operation['reboot'] = false;
-		lastText = "";
-	}
+      
+  	if(operation.exponent){
+    	operation.decimal = false;
+    	text.value += array[num];
+    } else {
+      text.value += num;
+    }
+  }
 }
 
 function simbol(sim){
-	if(operation["simbol"] == true){
+	if(operation.simbol){
 		text.value += sim;
-		lastText = "";
-		operation["simbol"] = false;
-		operation["decimal"] = true;
-		operation["exponent"] = false;
-		operation["numberVia"] = true;
-		operation['reboot'] = false;
+		operation = {
+			decimal: true,
+			exponent: false,
+			numberVia: true,
+			lastText: '',
+			parenthesis: 'med',
+			reboot: false,
+			simbol: false,
+			sqcb: operation.sqcb
+		};
 	}
 }
 
 function guardar(){
 	buttons.forEach(button=>{
 		button.addEventListener("click",()=>{
-			if (button.textContent == "√"){
-				operation['reboot'] = false;
-				if (operation["sqcb"] == false){
-					operation["sqcb"] = true;
-					operation["parenthesis"] = false;
-					text.value += "√(";
-				} else {
-					text.value += ")";
-					operation["sqcb"] = false;
-					operation["exponent"] = false;
-					operation["numberVia"] = false;
-				}
-			} else if (button.textContent == "³√"){
-				operation['reboot'] = false;
-				if (operation["sqcb"] == false){
-					operation["sqcb"] = true;
-					operation["parenthesis"] = false;
-					text.value += "³√(";
-				} else {
-					text.value += ")";
-					operation["sqcb"] = false;
-					operation["exponent"] = false;
-					operation["numberVia"] = false;
-				}
+			if (button.textContent === '√' || button.textContent === '³√'){
+				operation.reboot = false;
+				text.value += !operation.sqcb ? `${button.textContent}(` : ')';
+				operation.simbol = !operation.sqcb ? false : true;
+				operation.parenthesis = !operation.sqcb ? false : operation.parenthesis;
+				operation.exponent = operation.sqcb ? false : operation.exponent;
+				operation.numberVia = !operation.sqcb ? true : operation.exponent;
+				operation.sqcb = !operation.sqcb ? true : false;
 			} else if (button.textContent == "xⁿ"){
-				if(operation["simbol"] == true){
-					if(operation["exponent"] == false){	
-						operation["decimal"] = false;
-						operation["exponent"] = true;
+				if(operation.simbol){
+					if(!operation.exponent){	
+						operation.decimal = false;
+						operation.exponent = true;
 					}
 				}
 			} else if (button.textContent == "÷" || button.textContent == "*" || button.textContent == "-" || button.textContent == "+"){
@@ -153,43 +140,64 @@ function guardar(){
 				let array = ["⁰","¹","ᒾ","³","⁴","⁵","⁶","⁷","⁸","⁹"];
 				if (text.value.length >=1){
 					if (parseInt(text.value[text.value.length-1]) >= 0 && parseInt(text.value[text.value.length-1]) || array.includes(text.value[text.value.length-1]) <= 9){
-						if (lastText == ""){
+						if (operation.lastText == ""){
 							let regex = /[+-/*(]/i;
 							lastText = text.value;
 							text.value = text.value.replace(text.value.split(regex)[text.value.split(regex).length-1],`(-${text.value.split(regex)[text.value.split(regex).length-1]})`);
-							operation["numberVia"] = false;
+							operation.numberVia = false;
 						} else {
 							[lastText, text.value] = [text.value, lastText];
-							operation["numberVia"] = operation["numberVia"] == true ? false : true
+							operation.numberVia = operation.numberVia ? false : true;
 						}
 					}
 				}
 			} else if (parseInt(button.textContent) >= 0 && parseInt(button.textContent) <= 9){
 				number(button.textContent);
 			} else if (button.textContent == "."){
-				if(operation["decimal"] == true){
-					operation["decimal"] = false;
+				if(operation.decimal){
+					operation.decimal = false;
 					text.value += ".";
 				}
 			} else if (button.textContent == "="){
 				result();
 			} else if (button.textContent == "C"){
-				lastText = "";
-				operation["numberVia"] = true;
-				operation["exponent"] = false;
-				operation["simbol"] = false;
-				operation["decimal"] = true;
-				operation["sqcb"] = false;
-				operation['reboot'] = false;
+				operation = {
+					decimal:true,
+					exponent:false,
+					numberVia:true,
+					lastText: '',
+					parenthesis: true,
+					reboot: false,
+					simbol: false,
+					sqcb: false
+				};
 				text.value = "";
 			} else if (button.id == "BACK"){
 				text.value = text.value.substring(0,text.value.length-1);
+				if (text.value === ''){
+					operation = {
+						decimal:true,
+						exponent:false,
+						numberVia:true,
+						lastText: '',
+						parenthesis: true,
+						reboot: false,
+						simbol:false,
+						sqcb:false
+					};
+				}
 			} else if (button.textContent == "()") {
-				text.value += operation["parenthesis"] == true ? "(" : ")";
-				operation["sqcb"] = false;
-				operation["parenthesis"] = operation["parenthesis"] == true ? false : true;
-				operation["numberVia"] = operation["parenthesis"] == true ? false : true; 
-				operation['reboot'] = false;
+				text.value += operation.parenthesis === true ? "(" : operation.parenthesis === false ? ")" : '';
+      	operation = {
+        	decimal: operation.decimal,
+        	exponent: operation.exponent,
+        	numberVia: operation.parenthesis === true ? true : operation.parenthesis === false ? false : operation.numberVia,
+        	lastText: '',
+       		parenthesis: operation.parenthesis === true ? false : operation.parenthesis === false ? true : operation.parenthesis,
+       		reboot: false,
+        	simbol: operation.simbol,
+        	sqcb: false
+      	};
 			} 
 
 			if (text.value != "") {
@@ -229,12 +237,6 @@ if (!localStorage.getItem("DarkMode")){
 window.addEventListener("load",operaciones);
 
 window.addEventListener("resize",()=>{
-	if (document.body.clientWidth <= 460) {
-		document.querySelector(".darkMode").setAttribute("style",`width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;`);
-		document.querySelector(".about-button").setAttribute("style",`width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;`);
-	}
-	else {
-		document.querySelector(".darkMode").removeAttribute("style");
-		document.querySelector(".about-button").removeAttribute("style");
-	}
+		document.querySelector(".darkMode").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
+		document.querySelector(".about-button").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
 });
