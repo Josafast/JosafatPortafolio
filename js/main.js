@@ -1,242 +1,193 @@
-function operaciones(){
+document.querySelector('.year').textContent = new Date().getFullYear();
 
-	const language = navigator.language.split("-")[0];
+document.querySelector('.help').addEventListener('click',()=>{
+  document.querySelector('.about').classList.add('showed');
+});
 
-	document.querySelector(".about").firstElementChild.innerHTML = language == "es" ? `Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b>` : `Copyright "Ionic" and the use of its icons "Ion-icons" &#169; <b class="year"></b>`;
-	document.querySelector(".year").innerHTML = new Date().getFullYear();
+document.querySelector('.close').addEventListener('click',()=>{
+  document.querySelector('.about').classList.remove('showed');
+});
 
-	
-	document.querySelector(".darkMode").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
-	document.querySelector(".about-button").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
+const ongoingTouches = [];
 
-	document.querySelector(".about-button").addEventListener("click",()=>{
-		document.querySelector(".about").classList.toggle("showed");
-	});
+let canvas = document.querySelector(".canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const dif = canvas.getBoundingClientRect();
+const ctx = canvas.getContext("2d");
 
-	document.querySelector(".darkMode").addEventListener("click",()=>{
-		document.querySelector(".body").classList.toggle("dark-mode");
-		localStorage.setItem("DarkMode",localStorage.getItem("DarkMode") == "false" ? "true" : "false");
-	});
+const rangeInput = document.querySelector(".pixels");
+const colorInput = document.querySelector(".color");
+const cleaner = document.querySelector(".clean");
+const cleanerTrash = document.querySelector(".colorTrash");
+document.querySelector(".colorInput").style.backgroundColor = colorInput.value;
+cleaner.style.backgroundColor = colorInput.value;
+cleanerTrash.style.color = colorInput.value;
 
-	let operation = {
-		decimal:true,
-    exponent:false,
-    numberVia:true,
-    lastText: '',
-    parenthesis: true,
-    reboot: false,
-		simbol:false,
-		sqcb:false
-	};
+document.querySelector(".menu").addEventListener("click",()=>{
+	document.querySelector(".box").classList.toggle("expanded");
+});
 
-	let text = document.getElementById("text");
-	let buttons = document.querySelectorAll(".buttons");
+let difX, difY;
 
-function result(){
-	operation.parenthesis = true;
-	operation.exponent = false;
-		let valor1 = "";
-		let regex = /[⁰¹ᒾ³⁴⁵⁶⁷⁸⁹]/i;
-		let regex2 = /[+-/*÷]/i;
-		let array = ["⁰","¹","ᒾ","³","⁴","⁵","⁶","⁷","⁸","⁹"]
-		for (let i=0; i < text.value.length; i++){
-			valor1 += text.value[i] == "÷" ? "/" : 
-			(text.value[i+1] == "√" && text.value[i] == "³") ? "Math.cbrt" : 
-			(text.value[i] == "√" && text.value[i-1] != "³") ? "Math.sqrt" :
-			((text.value[i] == "√" && text.value[i-1] == "³") || (text.value[i] == "-" && text.value[i-1] == "(")) ? "" : 
-			(text.value[i].search(regex) == 0 && text.value[i-1].search(regex) == -1) ? `**${array.indexOf(text.value[i])}` :
-			(text.value[i].search(regex) == 0 && text.value[i-1].search(regex) == 0) ? `${array.indexOf(text.value[i])}` :
-			(text.value[i] == "(" && text.value[i+1] == "-") ? "(-1*" :
-			(text.value[i].search(regex2) == -1 && (text.value[i+1] == "(" || text.value[i+1] == "√")) ? `${text.value[i]}*` :
-			text.value[i]; 
-		}
+let painting = false;
 
-		try {
-			valor1 = eval(valor1);
-		} catch (e) {
-			let error = e.toString();
-			if (error.includes("missing ) after argument list")){
-				valor1+=")";
-				valor1 = eval(valor1);
-			}
-		}
-		operation.lastText = "";
-		text.value = valor1.toString() == "Infinity" ? "Not calculable" : valor1;
-
-		valor1 = text.value;
-
-		try {
-			if (text.value.split(".")[1]){
-				let Ei = text.value.split(".")[1];
-				Ei = Ei.includes("e") ? Ei.split("e")[0].slice(0,3) + "e" + Ei.split("e")[1] : Ei.slice(0,3);
-				text.value = text.value.indexOf(".") ? text.value.split(".")[0] + "." + Ei : text.value;	
-				valor1 = text.value;
-			}
-		} catch (e) {}
-		
-		operation.reboot = true;
+function copyTouch({ identifier, pageX, pageY }) {
+  return { identifier, pageX, pageY };
 }
 
-function number(num){
-	let array = ["⁰","¹","ᒾ","³","⁴","⁵","⁶","⁷","⁸","⁹"];
-      
-  if (operation.numberVia) {
-    operation.parenthesis = operation.parenthesis === 'med' ? false : operation.parenthesis ;
-    operation.simbol = true; operation.lastText = '';
+function ongoingTouchIndexById(idToFind) {
+  for (let i = 0; i < ongoingTouches.length; i++) {
+    const id = ongoingTouches[i].identifier;
 
-  	if (operation.reboot) {
-			if(!operation.exponent){
-				text.value = '';
-			} 
-			operation.reboot = false;
-		}
-      
-  	if(operation.exponent){
-    	operation.decimal = false;
-    	text.value += array[num];
-    } else {
-      text.value += num;
+    if (id == idToFind) {
+      return i;
+    }
+  }
+  return -1;    // not found
+}
+
+const dibujar = (x1,y1,x2,y2,color,pixeles) =>{
+	ctx.strokeStyle = color;
+	ctx.lineWidth = pixeles;
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.stroke(); 
+};
+
+function handleStart(evt) {
+  evt.preventDefault();
+  const touches = evt.changedTouches;
+  console.log(touches);
+
+  for (let i = 0; i < touches.length; i++) {
+    ongoingTouches.push(copyTouch(touches[i]));
+    ctx.beginPath();
+    ctx.arc(touches[i].pageX, touches[i].pageY, rangeInput.value/2, 1, 2 * Math.PI);  // a circle at the start
+    ctx.fillStyle = colorInput.value;
+    ctx.fill();
+  }
+}
+
+function handleMove(evt){
+	evt.preventDefault();
+  	const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    const idx = ongoingTouchIndexById(touches[i].identifier);
+
+    if (idx >= 0) {
+      ctx.beginPath();
+      dibujar(ongoingTouches[idx].pageX,ongoingTouches[idx].pageY,touches[i].pageX, touches[i].pageY,colorInput.value,rangeInput.value);
+
+      ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
     }
   }
 }
 
-function simbol(sim){
-	if(operation.simbol){
-		text.value += sim;
-		operation = {
-			decimal: true,
-			exponent: false,
-			numberVia: true,
-			lastText: '',
-			parenthesis: 'med',
-			reboot: false,
-			simbol: false,
-			sqcb: operation.sqcb
-		};
-	}
-}
-
-function guardar(){
-	buttons.forEach(button=>{
-		button.addEventListener("click",()=>{
-			if (button.textContent === '√' || button.textContent === '³√'){
-				operation.reboot = false;
-				text.value += !operation.sqcb ? `${button.textContent}(` : ')';
-				operation.simbol = !operation.sqcb ? false : true;
-				operation.parenthesis = !operation.sqcb ? false : operation.parenthesis;
-				operation.exponent = operation.sqcb ? false : operation.exponent;
-				operation.numberVia = !operation.sqcb ? true : operation.exponent;
-				operation.sqcb = !operation.sqcb ? true : false;
-			} else if (button.textContent == "xⁿ"){
-				if(operation.simbol){
-					if(!operation.exponent){	
-						operation.decimal = false;
-						operation.exponent = true;
-					}
-				}
-			} else if (button.textContent == "÷" || button.textContent == "*" || button.textContent == "-" || button.textContent == "+"){
-				simbol(button.textContent);
-			} else if (button.textContent == "±"){
-				let array = ["⁰","¹","ᒾ","³","⁴","⁵","⁶","⁷","⁸","⁹"];
-				if (text.value.length >=1){
-					if (parseInt(text.value[text.value.length-1]) >= 0 && parseInt(text.value[text.value.length-1]) || array.includes(text.value[text.value.length-1]) <= 9){
-						if (operation.lastText == ""){
-							let regex = /[+-/*(]/i;
-							lastText = text.value;
-							text.value = text.value.replace(text.value.split(regex)[text.value.split(regex).length-1],`(-${text.value.split(regex)[text.value.split(regex).length-1]})`);
-							operation.numberVia = false;
-						} else {
-							[lastText, text.value] = [text.value, lastText];
-							operation.numberVia = operation.numberVia ? false : true;
-						}
-					}
-				}
-			} else if (parseInt(button.textContent) >= 0 && parseInt(button.textContent) <= 9){
-				number(button.textContent);
-			} else if (button.textContent == "."){
-				if(operation.decimal){
-					operation.decimal = false;
-					text.value += ".";
-				}
-			} else if (button.textContent == "="){
-				result();
-			} else if (button.textContent == "C"){
-				operation = {
-					decimal:true,
-					exponent:false,
-					numberVia:true,
-					lastText: '',
-					parenthesis: true,
-					reboot: false,
-					simbol: false,
-					sqcb: false
-				};
-				text.value = "";
-			} else if (button.id == "BACK"){
-				text.value = text.value.substring(0,text.value.length-1);
-				if (text.value === ''){
-					operation = {
-						decimal:true,
-						exponent:false,
-						numberVia:true,
-						lastText: '',
-						parenthesis: true,
-						reboot: false,
-						simbol:false,
-						sqcb:false
-					};
-				}
-			} else if (button.textContent == "()") {
-				text.value += operation.parenthesis === true ? "(" : operation.parenthesis === false ? ")" : '';
-      	operation = {
-        	decimal: operation.decimal,
-        	exponent: operation.exponent,
-        	numberVia: operation.parenthesis === true ? true : operation.parenthesis === false ? false : operation.numberVia,
-        	lastText: '',
-       		parenthesis: operation.parenthesis === true ? false : operation.parenthesis === false ? true : operation.parenthesis,
-       		reboot: false,
-        	simbol: operation.simbol,
-        	sqcb: false
-      	};
-			} 
-
-			if (text.value != "") {
-				document.querySelector(".about-button").classList.add("d-none");
-			} else document.querySelector(".about-button").classList.remove("d-none");
-		})
-	})
-}
-
-	guardar();
-
-	window.addEventListener("keydown",(e)=>{
-		let regex = /[()+*-/.0-9]/i;
-
-		if (e.key == "Enter"){
-			result();
-		} else if (e.key == "Backspace"){
-			text.value = text.value.substring(0,text.value.length-1);
-		} else if (e.key.search(regex) == 0){
-			text.value += e.key == "/" ? "÷" : e.key;
-		}
-
-		if (text.value != "") {
-			document.querySelector(".about-button").classList.add("d-none");
-		} else document.querySelector(".about-button").classList.remove("d-none");
-	});
-}
-
-if (!localStorage.getItem("DarkMode")){
-	localStorage.setItem("DarkMode","false");
-} else {
-	if (localStorage.getItem("DarkMode") == "true"){
-		document.querySelector(".body").classList.add("dark-mode");	
-	}
-}
-
-window.addEventListener("load",operaciones);
-
-window.addEventListener("resize",()=>{
-		document.querySelector(".darkMode").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
-		document.querySelector(".about-button").setAttribute("style",document.body.clientWidth <= 460 ? `width:${document.querySelectorAll(".buttons")[0].clientWidth}px !important;height:${document.querySelectorAll(".buttons")[0].clientHeight}px !important;` : 'width: 320px;height: 40px');
+canvas.addEventListener("click",(e)=>{
+	ctx.beginPath();
+	ctx.fillStyle = colorInput.value;
+	ctx.arc(e.clientX-dif.left, e.clientY-dif.top, rangeInput.value/2, 1, 7);
+	ctx.fill();
+	ctx.closePath();
 });
+
+canvas.addEventListener("mousedown",(e)=>{
+	document.querySelector(".box").classList.remove("expanded");	
+	ctx.beginPath();
+	ctx.fillStyle = colorInput.value;
+	ctx.arc(e.clientX-dif.left, e.clientY-dif.top, rangeInput.value/2, 1, 2 * Math.PI);
+	ctx.fill();
+	ctx.closePath();
+	difX = e.clientX - dif.left;
+	difY = e.clientY - dif.top;
+	painting = true;
+	ctx.beginPath();
+});
+
+function handleEnd(evt) {
+  evt.preventDefault();
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    let idx = ongoingTouchIndexById(touches[i].identifier);
+
+    if (idx >= 0) {
+      ctx.lineWidth = rangeInput.value;
+      ctx.fillStyle = colorInput.value;
+      ctx.beginPath();
+    	ctx.arc(touches[i].pageX, touches[i].pageY, rangeInput.value/2, 1, 2 * Math.PI);  // a circle at the start
+    	ctx.fillStyle = colorInput.value;
+    	ctx.fill(); // and a square at the end
+      ongoingTouches.splice(idx, 1);  // remove it; we're done
+    } 
+  }
+}
+
+function handleCancel(evt) {
+  evt.preventDefault();
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    let idx = ongoingTouchIndexById(touches[i].identifier);
+    ongoingTouches.splice(idx, 1);  // remove it; we're done
+  }
+}
+
+canvas.addEventListener("touchstart",handleStart,true);
+
+canvas.addEventListener("mousemove",(e)=>{
+	if (painting){
+		dibujar(difX,difY,e.clientX-dif.left,e.clientY-dif.top,colorInput.value,rangeInput.value);
+		difX = e.clientX - difX.left;
+		difY = e.clientY - difY.top;
+	}
+});
+
+canvas.addEventListener("touchmove",handleMove);
+
+canvas.addEventListener("mouseup",()=>{
+	ctx.closePath();
+	painting = false;
+});
+
+canvas.addEventListener("touchend",handleEnd);
+
+colorInput.addEventListener("input",(e)=>{
+	document.querySelector(".colorInput").style.backgroundColor = e.target.value;
+	cleaner.style.backgroundColor = e.target.value;
+	cleanerTrash.style.color = e.target.value;
+});
+
+canvas.addEventListener("touchcancel",handleCancel);
+
+cleaner.addEventListener("click",()=>ctx.clearRect(0,0,canvas.width,canvas.height));
+
+window.addEventListener("resize",(e)=>{
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+});
+
+/*ctx.lineWidth = "6";
+ctx.strokeStyle = "#48e";
+ctx.fillStyle = "#26a";
+ctx.strokeRect(30,50,100,50);
+ctx.fillRect(20,40,100,50);
+
+ctx.lineTo(50, 100);
+ctx.lineTo(50, 120);
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.strokeStyle = "#0e0";
+ctx.lineTo(200, 20);
+ctx.lineTo(200, 40);
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.strokeStyle = "e00";
+ctx.arc(100, 30, 10, 5, 12);
+ctx.stroke();*/

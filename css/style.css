@@ -1,243 +1,253 @@
 * {
-	font-family: 'Roboto', sans-serif;
-	font-weight:100;
-	font-size:1.1em;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 100;
+  box-sizing: border-box;
 }
-
-.d-none {display: none !important;}
 
 body {
-	flex-flow: column;
-	background-color: #f9f9f9;
-	min-height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  justify-content: start;
+  background-color: #333;
 }
 
-body.dark-mode {background-color: #333;}
-
-.calculator {
-	z-index: 1;
-	flex-shrink: 1;
-	flex-grow: 1;
-	display: grid;
-	grid-auto-rows: minmax(min-content,1fr);
-	grid-template-columns:repeat(4,80px);
-	max-height: 560px; 
-	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+body .box {
+  transition: 0.3s;
+  overflow: hidden;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #ddd;
+  position: fixed;
+  gap: 10px;
+  align-items: center;
+  display: flex;
+  flex-flow: row;
+  justify-content: start;
+  width: 50px;
+  height: max-content;
 }
 
-body.dark-mode .calculator {
-	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);	
+body .box.expanded {
+  padding-left: 60px;
+  border-radius: 40px;
+  width: max-content;
 }
 
-.darkMode {
-	z-index: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	width: 320px !important;
-	height: 40px !important;
-	background-color: #666;
-	color: #fff;
+body .box span {
+  display: flex;
+  justify-content: center;
+  font-size: 1.3em;
+  margin-right: 10px;
+  color: #fff;
 }
 
-.darkMode img {
-	filter: invert(100%);
-	width: 25px;
-	height: 25px;
+canvas {
+  background-color: #fff;
+  border: none;
 }
 
-.darkMode img[src="images/svg/sunny.svg"]{display: none;}
-
-body.dark-mode .darkMode img[src="images/svg/sunny.svg"]{display: inline-block;}
-
-body.dark-mode .darkMode img[src="images/svg/moon.svg"]{display: none;}
-
-.text {
-	cursor: default;
-	font-size: 1.5em;
-	border: none;
-	outline:none;
-	text-align:right;
-	padding-right:20px;
-	user-select:none;
+body .box .colorSelector {
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: max-content;
+  height: max-content;
 }
 
-body.dark-mode .calculator .text {
-	background-color: #999;
-	color: #fff;
+body .box .colorSelector span.colorInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 1em;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  color: 0;
+  border: none;
+  background-color: attr(color);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
 
-.text:first-child {grid-column: 1 / span 4;}
-
-.buttons {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1.4em;
-	border: none;
-	transition:0.1s;
-	user-select:none;
-	cursor:pointer;
-	color:grey;
+body .box input.color {
+  opacity: 0;
+  top: 5px;
+  left: 0;
+  position: absolute;
+  padding: 0;
+  height: 30px;
+  margin: 0;
+  width: 30px;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
 }
 
-.buttons img {filter: invert(45%);}
-
-body.dark-mode .calculator .buttons {
-	background-color: #444;
-	color: #fff;
+body .box .clean {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.4em;
+  width: 30px;
+  height: 30px;
 }
 
-.buttons:hover {background-color: lightgrey;}
-
-body.dark-mode .calculator .buttons:hover {background-color: #333;}
-
-.buttons:active {background-color: grey; }
-
-body.dark-mode .calculator .buttons:active {background-color: #222;}
-
-.buttons:nth-child(24) {grid-column: 3 / span 2;}
-
-.calculator .buttons img {
-	width: 50px;
-	height: 50px;
+body .box .clean:active {
+  color: #333;
 }
 
-body.dark-mode img {filter: invert(100%);}
+body .box .clean .colorTrash {
+  margin: 5px;
+  filter: invert(100%);
+}
+
+body .box .menu {
+  transition: 0.3s;
+  font-size: 1.7em;
+  color: black;
+  background-color: #ddd;
+  border-radius: 10px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 50px;
+  height: 100%;
+}
+
+body .box .menu .open {
+  margin: 8px;
+}
+
+body .box .menu .close {
+  display: none;
+}
+
+body .box.expanded .menu .close {
+  display: inline-block;
+  margin: 10px;
+  filter: invert(100%);
+}
+
+body .box.expanded .menu .open {
+  display: none;
+}
+
+body .box.expanded .menu {
+  background-color: #df0000;
+  color: #fff;
+  border-radius: 40px;
+}
+
+body .box .help {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  cursor: pointer;
+}
 
 body .about {
-	padding: 20px;
-	justify-content: center;
-	top: 0;
-	left: 0;
-	display: flex;
-	position: fixed;
-	width: 100%;
-	height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+body .about.showed {
+  display: flex;
+}
+
+body .about .close {
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+body .about .github {
+  text-decoration: none;
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-size: 1.9em;
+}
+
+body .about .github img{
+  filter: invert(29%) sepia(0%) saturate(6624%) hue-rotate(316deg) brightness(120%) contrast(107%);
+}
+
+body .about .github img:hover {
+  filter: invert(14%) sepia(19%) saturate(0%) hue-rotate(10deg) brightness(95%) contrast(83%);
+}
+
+body .about .jfast {
+  text-decoration: none;
+  width: 60px;
+  height: 60px;
+}
+
+body .about .jfast img {
+  filter: invert(50%);
 }
 
 body .about p {
-	text-align: center;
-	color: #666;
-	font-size: .8em;
+  max-width: 400px;
+  color: #555;
+  font-weight: lighter;
+  text-align: center;
+  margin: 20px;
 }
 
-body.dark-mode .about p {
-	color: #fff;
-}
+@media (max-width: 530px){
+  body .box {
+    width: 50px;
+    height: 50px;
+    flex-flow: column;
+  }
 
-body .about a[href="https://github.com/Josafast"] img{
-	position: fixed;
-	bottom: 15px;
-	left: 15px;
-	width: 40px;
-	height: 40px;
-	filter: invert(50%);
-}
+  body .box.expanded {
+    padding: 60px 0 10px 0;
+    width: 50px;
+    height: max-content;
+  }
 
-body .about a[href="https://github.com/Josafast/Calculator"] img{
-	position: fixed;
-	bottom: 15px;
-	right: 20px;
-	width: 30px;
-	height: 30px;
-	filter: invert(50%);
-}
+  body .box input.pixels {
+    transform: rotate(-90deg);
+    margin: 60px 0;
+  }
 
-body.dark-mode .about a[href="https://github.com/Josafast"] img {filter: invert(100%);}
-
-body.dark-mode .about a[href="https://github.com/Josafast/Calculator"] img {filter: invert(70%);}
-
-body.dark-mode .about a[href="https://github.com/Josafast/Calculator"]:hover img {filter: invert(100%);}
-
-body .about a[href="https://github.com/Josafast/Calculator"]:hover img {filter: invert(30%);}
-
-body .about-button {display: none;}
-
-@media (max-width: 460px){
-	body .about-button img[src="images/svg/close.svg"]{display: none;}
-
-	body .about.showed ~ .about-button{z-index: 4;} 
-
-	body .about.showed ~ .about-button > img[src="images/svg/help-outline.svg"]{display: none;}
-
-	body .about.showed ~ .about-button > img[src="images/svg/close.svg"]{display: inline-block;}
-
-	body .about-button {
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		top: 0;
-		right: 0;
-		position: fixed;
-		background-color: transparent;
-		z-index: 2;
-	}
-
-	body .about.showed {
-		gap: 5px;
-		align-items: center;
-		flex-flow: column;
-		z-index: 3;
-		background-color: rgba(255, 255, 255, 0.8);
-	}
-
-	body.dark-mode .about.showed {background-color: rgba(68, 68, 68, 0.8);}
-
-	body .about a[href="https://github.com/Josafast"] img{
-		order: 1;
-		position: relative;
-		bottom: auto;
-		left: auto;
-		width: 60px;
-		height: 60px;
-	}
-
-	body .about a[href="https://github.com/Josafast/Calculator"] img{
-		right: 0;
-		left: 20px;
-	}
-
-	body .about p {order: 2;}
-
-	body.dark-mode .about-button img {filter: invert(100%);}
-
-	body .about-button img {
-		filter: invert(45%);
-		width: 35px;
-		height: 35px;
-	}
-
-	.calculator {
-		top: 0;
-		left: 0;
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		max-height: 100vh;
-		grid-template-columns: repeat(4, 1fr);
-		grid-template-rows: repeat(7, 1fr);
-	}
-
-	.darkMode {
-		background-color: transparent;
-		color: grey;
-		top: 0;
-		left: 0;
-		position: fixed;
-		z-index: 2;
-	}
-
-	.darkMode img {
-		filter: invert(45%);
-		width: 35px;
-		height: 35px;
-	}
-
-	body.dark-mode .darkMode {color: #fff;}
+  body .box .menu{
+    width: 100%;
+    height: 50px;
+  }
 }

@@ -1,59 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Calculadora</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="x-ua-compatible" content="ie-edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" type="image/icon" href="images/icons/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+	<title>Canvas paint</title>
 </head>
-<body class="body">
-
-	<section class="about">
+<body>
+	<canvas class="canvas"></canvas>
+	<section class='about'>
+		<img class='close' src="images/svg/close.svg" alt="close">
+		<a href="#" class="github">
+			<img src="images/icons/logo-github.svg" alt="logo-github">
+		</a>
+		<a href="#" class="jfast">
+			<img src="images/icons/jfastSFX.svg" alt="jfast-github-profile">
+		</a>
 		<p>Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b></p>
-		<a href="https://github.com/Josafast" target="_BLANK"><img src="images/icons/jfastSFX.svg"></a>
-		<a href="https://github.com/Josafast/Calculator"><img src="images/icons/logo-github.svg"></a>
 	</section>
-	<span class="darkMode">
-		<img src="images/svg/sunny.svg">
-		<img src="images/svg/moon.svg">
-	</span>
-	<span class="about-button">
-		<img src="images/svg/help-outline.svg">
-		<img src="images/svg/close.svg">
-	</span>
-	<div class="calculator">
-		<input type="text" class="text" id="text" readonly="readonly">
-		<button class="buttons">√</button>
-		<button class="buttons">³√</button>
-		<button class="buttons">xⁿ</button>
-		<button class="buttons">÷</button>
-		<button class="buttons">7</button>
-		<button class="buttons">8</button>
-		<button class="buttons">9</button>
-		<button class="buttons">*</button>
-		<button class="buttons">4</button>
-		<button class="buttons">5</button>
-		<button class="buttons">6</button>
-		<button class="buttons">-</button>
-		<button class="buttons">1</button>
-		<button class="buttons">2</button>
-		<button class="buttons">3</button>
-		<button class="buttons">+</button>
-		<button class="buttons">±</button>
-		<button class="buttons">0</button>
-		<button class="buttons">.</button>
-		<button class="buttons">=</button>
-		<button class="buttons">()</button>
-		<button class="buttons">C</button>
-		<button class="buttons" id="BACK"><img src="images/svg/backspace.svg"></button>
+	<div class="box">
+		<span class="menu">
+			<img class='open' src="images/svg/menu-outline.svg" alt="menu">
+			<img class='close' src="images/svg/close.svg" alt="close">
+		</span>
+		<div class="colorSelector">
+			<span class="colorInput"></span>
+			<input type="color" class="color">
+		</div>
+		<input type="range" class="pixels" min="1" max="20">
+		<button class="clean" style="color:#000;"><img src="images/svg/trash-bin.svg" alt="trash" class="colorTrash"></button>
+		<button class="help"><img src="images/svg/help-outline.svg" alt="help"></ion-icon></button>
 	</div>
 
 	<script src="js/main.js"></script>
+
 </body>
 </html>
