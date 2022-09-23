@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%-include('partials/head.html')%>
+  <title>Login</title>
+</head>
+<body class="body">
+  <span class="Demoinfo">
+		<ion-icon name="information"></ion-icon>
+		<p>
+			Contraseña (demo): <b class="demoPassword" style="font-weight: 700;"></b>
+		</p>
+	</span>
+
+  <span class="help">
+		<img src="img/help.svg" alt="help">
+	</span>
+
+  <div class="message"></div>
+
+  <div class="box">
+    <div class="type">
+      <h1>¡Bienvenido <i class="usuario"></i> !</h1>
+    </div>
+    <h2 class="">Correo: <input class="email" type="text" value="" readonly></h2>
+    <h2>Contraseña: <br><b style="font-weight:700;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*No visible*</b></h2>
+    <div class="passwordChange">
+      <h3>Cambie su contraseña</h3>
+      <form class="passwordInputs">
+        <label for="oldPassword">
+          <h4>Contraseña antigua</h4>
+          <input type="password" id="oldPassword">
+          <span class="visible">
+            <ion-icon name="eye"></ion-icon>
+          </span>
+          <span class="not-visible">
+            <ion-icon name="eye-off"></ion-icon>
+          </span>
+        </label>
+        <label for="newPassword">
+          <h4>Contraseña nueva</h4>
+          <input type="password" id="newPassword">
+          <span class="visible">
+            <ion-icon name="eye"></ion-icon>
+          </span>
+          <span class="not-visible">
+            <ion-icon name="eye-off"></ion-icon>
+          </span>
+        </label>
+        <button type="submit" class="submit">Cambiar</button>
+      </form>
+      <button class="exit">
+        <span>
+          <ion-icon name="log-out-outline"></ion-icon>
+        </span>
+        <span class="text">
+          Salir de la sesión
+        </span>
+      </button>
+      <button class="delete">
+        <span>
+          <ion-icon name="trash-outline"></ion-icon>
+        </span>
+        <span class="text">
+          Eliminar cuenta
+        </span>
+      </button>
+    </div>
+  </div>
+  <footer class="footer">
+    <span class="close">
+      <img src="img/close.svg" alt="close">
+    </span>
+    <a href="https://github.com/Josafast" target="_blank">
+      <img src="img/jfastSFX.svg" alt="Josafast logo">
+    </a>
+    <p>Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b></p>
+    <a href="https://github.com/Josafast?tab=repositories" target="_blank">
+      <img src="img/logo-github.svg" alt="logo github">
+    </a>
+    <br><br><br><br>
+    <p class="demoInfo">
+			Usuario de prueba: <br><br>
+			Contraseña: <b class="demoPassword" style="font-weight: 700;"></b>
+		</p>
+  </footer>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    document.querySelector('.year').textContent = new Date().getFullYear();
+
+		document.querySelector('.close').addEventListener("click",()=>{
+			document.querySelector('footer').classList.remove('active');
+		});
+
+		document.querySelector('.help').addEventListener("click",()=>{
+			document.querySelector('footer').classList.add('active');
+		});
+	</script>
+  <%-include('partials/login.html')%>
+</body>
+</html>

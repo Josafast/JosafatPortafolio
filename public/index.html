@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="x-ua-compatible" content="ie-edge">
+	<link rel="shortcut icon" type="image/icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="/css/normalize.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<title>Sign up or Log in</title>
+</head>
+<body class="body">
+
+	<span class="Demoinfo">
+		<ion-icon name="information"></ion-icon>
+		<p>
+			Correo (demo): <b style="font-weight: 700;">demouser@email.com</b><br>
+			Contraseña (demo): <b class="demoPassword" style="font-weight: 700;"></b>
+		</p>
+	</span>
+
+	<span class="help">
+		<img src="img/help.svg" alt="help">
+	</span>
+
+	<div class="message"></div>
+
+	<div class="box">
+		<div class="log">
+			<h1>¿Ya tienes una cuenta?</h1>
+			<button>Ingresa</button>
+		</div>
+		<div class="sign">
+			<h1>¿No tienes una cuenta?</h1>
+			<button>Regístrate</button>
+		</div>
+		<div class="type">
+			<form class="loger formulario" id="loger">
+				<h2>Ingresa</h2>
+				<label for="login-email">
+					<input type="email" placeholder="Correo electrónico" id="login-email" name="login-email">
+				</label>
+				<div class="passwords">
+					<label for="login-password">
+						<input type="password" placeholder="Contraseña" class="password" id="login-password" name="login-password">
+						<span class="visible">
+							<ion-icon name="eye-outline"></ion-icon>
+						</span>
+						<span class="not-visible" style="display:none;">
+							<ion-icon name="eye-off-outline"></ion-icon>
+						</span>
+					</label>
+				</div>
+				<button id="login" type="submit">Ingresar</button>
+				<a href="#">¿Olvidaste tu contraseña?</a>
+			</form>
+			<form class="signer formulario" id="signer">
+				<h2>Regístrate</h2>
+				<label for="sign-user">
+					<input type="text" placeholder="Nombre de usuario" id="sign-user" name="sign-user">
+				</label>
+				<label for="sign-email">
+					<input type="email" placeholder="Correo electrónico" id="sign-email" name="sign-email">
+				</label>
+				<label for="sign-password">
+					<div class="passwords">
+						<input type="password" placeholder="Contraseña" class="password" id="sign-password" name="sign-password">
+						<span class="visible">
+							<ion-icon name="eye-outline"></ion-icon>
+						</span>
+						<span class="not-visible" style="display:none;">
+							<ion-icon name="eye-off-outline"></ion-icon>
+						</span>
+					</div>
+				</label>
+				<label for="sign-password-confirm">
+					<div class="passwords">
+						<input type="password" placeholder="Confirmar contraseña" class="password" id="sign-password-confirm" name="sign-password-confirm">
+						<span class="visible">
+							<ion-icon name="eye-outline"></ion-icon>
+						</span>
+						<span class="not-visible" style="display:none;">
+							<ion-icon name="eye-off-outline"></ion-icon>
+						</span>
+					</div>
+				</label>
+				<button id="signup">Registrarse</button>
+			</form>
+		</div>
+	</div>
+	<footer class="footer">
+		<span class="close">
+			<img src="img/close.svg" alt="close">
+		</span>
+		<a href="https://github.com/Josafast" target="_blank">
+			<img src="img/jfastSFX.svg" alt="Josafast logo">
+		</a>
+		<p>Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b></p>
+		<br><br><br><br>
+		<p class="demoInfo">
+			Usuario de prueba: <br><br>
+			Correo electrónico: <b style="font-weight: 700;">demouser@email.com</b> <br>
+			Contraseña: <b class="demoPassword" style="font-weight: 700;"></b>
+		</p>
+		<a href="https://github.com/Josafast?tab=repositories" target="_blank">
+			<img src="img/logo-github.svg" alt="logo github">
+		</a>
+	</footer>
+
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+	<script src="js/main.js"></script>
+	<script src="js/mensaje.js"></script>
+	<script>
+		document.querySelector('.year').textContent = new Date().getFullYear();
+
+		document.querySelector('.close').addEventListener("click",()=>{
+			document.querySelector('footer').classList.remove('active');
+		});
+
+		document.querySelector('.help').addEventListener("click",()=>{
+			document.querySelector('footer').classList.add('active');
+		});
+	</script>
+
+</body>
+</html>
