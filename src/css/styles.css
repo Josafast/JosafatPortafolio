@@ -211,6 +211,7 @@
 		}
 
 		body .wordle__main .wordle__keyboard {
+			padding: 0 20px;
 			bottom: 0;
 			position: fixed;
 			justify-content: center;
