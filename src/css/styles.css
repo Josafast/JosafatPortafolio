@@ -148,6 +148,7 @@
 		}
 
 		body .wordle__main .wordle__word-box {
+			margin-top: -35%;
 			height: min-content;
 			gap: 5.5px;
 			padding: 50px;
@@ -211,6 +212,8 @@
 		}
 
 		body .wordle__main .wordle__keyboard {
+			bottom: 0;
+			position: fixed;
 			justify-content: center;
 			align-items: center;
 			display: grid;
@@ -218,7 +221,7 @@
 			grid-template-rows: repeat(2, 50px);
 			margin-top: auto;
 			margin-bottom: 10px;
-			width: 100%;
+			max-width: 530px;
 			grid-gap: 6px;
 		}	
 
