@@ -1,0 +1,624 @@
+* {
+			font-family: 'Trebuchet MS', sans-serif;
+			font-weight: 100;
+			box-sizing: border-box;
+		}
+
+		:root {
+			--incorrect: #999;
+			--not-here: #bfbf00;
+			--correct: #308f47;
+			--daltonic-not-here: #51a0ce;
+			--daltonic-correct: #df5400;
+		}
+
+		.d-none {
+			display: none;
+		}
+
+		body {
+			transition: 0.2s;
+			display: flex;
+			flex-flow: column;
+			align-items: center;
+			background-color: #f9f9f9;
+			min-height: 100vh;
+		}
+
+		body b {
+			font-weight: bold;
+		}
+
+		body.dark-mode {
+			background-color: #111;
+		}
+
+		body div {
+			width: 100%;
+		}
+
+		body .wordle__main {
+			gap: 0;
+			position: relative;
+			display: flex;
+			flex-flow: row wrap;
+			flex-grow: 1;
+			max-width: 530px;
+			height: 100%;
+		}
+
+		body .wordle__footer {
+			padding: 0 20px;
+			z-index: 5;
+			height: 100px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: fixed;
+			bottom: 0;
+			max-width: 530px;
+		}
+
+		body .wordle__footer a {
+			filter: invert(30%);
+			width: 40px;
+			height: 40px;
+		}
+
+		body.dark-mode .wordle__footer a{
+			filter: invert(100%);
+		}
+
+		body .wordle__footer a[href="https://josafast.github.io/JWordle"]{
+			margin-top: 15px;
+			width: 30px;
+			height: 30px;
+		}
+
+		body .wordle__footer a[href="https://josafast.github.io/JWordle"]:hover {
+			filter: invert(5%);
+		}
+
+		body.dark-mode .wordle__footer a[href="https://josafast.github.io/JWordle"]:hover{
+			filter: invert(55%);
+		}
+
+		body .wordle__main div .wordle__head {
+			padding-top: 3px;
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid #999;
+		}
+
+		body.dark-mode .wordle__main div .wordle__head {
+			border-color: #555;
+		}
+
+		body .wordle__main div .wordle__head .icon {
+			width: 40px;
+			margin: 5px;
+			cursor: pointer;
+		}
+
+		body.dark-mode .wordle__main div .wordle__head .icon {
+			color: #f9f9f9;
+			filter: invert(100%);
+		}
+
+		body .wordle__main div .wordle__head .icon img {
+			width: 100%;
+			height: 100%;
+		}
+
+		body .wordle__main .wordle__title {
+			height: min-content;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			font-weight: bold;
+			text-align: center;
+			padding-bottom: 5px;
+		}
+
+		body.dark-mode .wordle__main .wordle__title {
+			color: #f9f9f9;
+		}
+
+		body.dark-mode .wordle__main .wordle__word-type {
+			color: #f9f9f9;
+			border-color: #555;	
+		}
+
+		body .wordle__main .wordle__word-type {
+			height: min-content;
+			margin: 0 0 auto;
+			width: 100%;
+			padding: 4px 0;
+			border-bottom: 1px solid #999;
+			font-size: 1.1em;
+			text-align: center;
+		}
+
+		body .wordle__main .wordle__word-box {
+			height: min-content;
+			gap: 5.5px;
+			padding: 50px;
+			justify-content: center;
+			align-items: center;
+			display: flex;
+			flex-flow: column;
+			flex-grow: 1;
+			width: 100%;
+		}
+
+		body .wordle__main .wordle__word-box .wordle__word-letters {
+			height: 55px;
+			width: min-content;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		body .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter {
+			user-select: none;
+			font-weight: bold;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2em;
+			width: 55px;
+			height: 55px;
+			border-radius: 2px;
+			color: #999;
+			border: 2px solid #999;
+		}
+
+		body .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.incorrect {
+			color: #f9f9f9;
+			background-color: #999;
+		}
+
+		body .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.not-here {
+			color: #f9f9f9;
+			background-color: var(--not-here);
+			border-color: var(--not-here);
+		}
+
+		body.daltonico .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.not-here {
+			color: #f9f9f9;
+			background-color: var(--daltonic-not-here);
+			border-color: var(--daltonic-not-here);
+		}
+
+		body .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.correct {
+			color: #f9f9f9;
+			background-color: var(--correct);
+			border-color: var(--correct);
+		}	
+
+		body.daltonico .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.correct {
+			color: #f9f9f9;
+			background-color: var(--daltonic-correct);
+			border-color: var(--daltonic-correct);
+		}
+
+		body .wordle__main .wordle__keyboard {
+			justify-content: center;
+			align-items: center;
+			display: grid;
+			grid-template-columns: repeat(10, minmax(min-content, 1fr));
+			grid-template-rows: repeat(2, 50px);
+			margin-top: auto;
+			margin-bottom: 10px;
+			width: 100%;
+			grid-gap: 6px;
+		}	
+
+		body .wordle__main .wordle__keyboard div {
+			grid-column: 1/11;
+			display: grid;
+			grid-gap: 6px;
+			grid-auto-rows: 50px;
+			grid-template-columns: minmax(min-content, 70px) repeat(7, minmax(min-content,1fr)) minmax(min-content, 70px);
+			width: 100%;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key {
+			cursor: pointer;
+			margin: auto;
+			background-color: #ddd;
+			border: none;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1em;
+			font-weight: bold;
+			height: 100%;
+			width: 100%;
+			user-select: none;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key img {
+			filter: invert(100%);
+		}
+
+		body.dark-mode .wordle__main .wordle__keyboard .wordle__key {
+			background-color: #888;
+			color: #fff;
+		}
+
+		body .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.writed {
+			color: #333;
+			border-color: #333;
+		}
+
+		body.dark-mode .wordle__main .wordle__word-box .wordle__word-letters .wordle__word-letter.writed {
+			color: #fff;
+			border-color: #fff;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key.Enter, .wordle__key.Back {
+			color: #fff;
+			flex-grow: 1;
+			font-size: 1.7em;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key.Enter {
+			background-color: #0c38b3;
+			padding: 19px;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key.Back {
+			background-color: #b30c0c;
+			padding: 19px;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key.incorrect {
+			color: #f9f9f9;
+			background-color: #999;
+		}
+
+		body.dark-mode .wordle__main .wordle__keyboard .wordle__key.incorrect {
+			color: #f9f9f9;
+			background-color: #444;
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key.not-here {
+			color: #f9f9f9;
+			background-color: var(--not-here);
+		}
+
+		body .wordle__main .wordle__keyboard .wordle__key.correct {
+			color: #f9f9f9;
+			background-color: var(--correct);
+		}
+
+		body.daltonico .wordle__main .wordle__keyboard .wordle__key.not-here {
+			color: #f9f9f9;
+			background-color: var(--daltonic-not-here);
+		}
+
+		body.daltonico .wordle__main .wordle__keyboard .wordle__key.correct {
+			color: #f9f9f9;
+			background-color: var(--daltonic-correct);
+		}
+
+		body .disabled {
+			pointer-events: none;
+		}
+
+		body .wordle__main .wordle__help, .wordle__menu, .wordle__credits {
+			padding: 0;
+			position: fixed;
+			display: flex;
+			flex-flow: column;
+			align-items: center;
+			max-width: 530px;
+			height: 100%;
+			background-color: rgba(249, 249, 249, 0.9);
+			animation: show 0.2s forwards;
+			transition: 0.1s;
+		}
+
+		body .wordle__main .wordle__help {
+			padding: 0 20px;
+		}
+
+		body.dark-mode .wordle__main .wordle__help, body.dark-mode .wordle__main .wordle__menu, body.dark-mode .wordle__main .wordle__credits {
+			background-color: rgb(17, 17, 17, 0.9);
+			color: #f9f9f9;
+		}
+
+		body .wordle__main .wordle__help .wordle__word-letter-demo {
+			margin: 0;
+			user-select: none;
+			font-weight: bold;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2em;
+			width: 55px;
+			height: 55px;
+			border-radius: 2px;
+			color: #999;
+			border: 2px solid #999;
+		}
+
+		body .wordle__main .wordle__help .wordle__word-letter-demo.writed {
+			color: #333;
+		}
+
+		body.dark-mode .wordle__main .wordle__help .wordle__word-letter-demo.writed {
+			color: #fff;
+		}
+
+		body .wordle__main .wordle__help .wordle__word-letter-demo.correct{
+			color: #f9f9f9;
+			background-color: var(--correct);
+			border-color: var(--correct);
+		}
+
+		body .wordle__main .wordle__help .wordle__word-letter-demo.not-here{
+			color: #f9f9f9;
+			background-color: var(--not-here);
+			border-color: var(--not-here);
+		}
+
+		body .wordle__main .wordle__help .wordle__word-letter-demo.incorrect {
+			color: #f9f9f9;
+			background-color: #999;
+		}
+
+		body.daltonico .wordle__main .wordle__help .wordle__word-letter-demo.correct{
+			color: #f9f9f9;
+			background-color: var(--daltonic-correct);
+			border-color: var(--daltonic-correct);
+		}
+
+		body.daltonico .wordle__main .wordle__help .wordle__word-letter-demo.not-here{
+			color: #f9f9f9;
+			background-color: var(--daltonic-not-here);
+			border-color: var(--daltonic-not-here);
+		}
+
+		body .wordle__main .wordle__help div, body .wordle__main .wordle__credits div{
+			margin: 10px 0;
+			display: flex;
+			justify-content: center;
+			height: min-content;
+			width: 100%;
+			gap: 4px;
+		}
+
+		body .wordle__main .wordle__credits div {
+			gap: 10px;
+			flex-flow: column;
+		}
+
+		body .wordle__main .wordle__help h3 {
+			margin: 7px 0;
+		}
+
+		body .wordle__main .wordle__credits h3 {
+			text-align: center;
+			margin: 0 15px;
+		}
+
+		body .wordle__main .wordle__help .play {
+			color: #fff;
+			margin-top: 10px;
+			margin-left: auto;
+			border-radius: 5px;
+			width: max-content;
+			padding: 14px 21px 16px;
+			background-color: var(--correct);
+			border: none;
+			cursor: pointer;
+		}
+
+		body .wordle__main .wordle__help h1 {
+			width: calc(100% + 40px);
+			margin: 0 0 10px;
+			align-self: center;
+			padding: 10px 0;
+			border-bottom: 1px solid #555;
+			text-align: center;
+			letter-spacing: .2em;
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		body .wordle__main .wordle__menu h1, .wordle__credits h1 {
+			width: 100%;
+			margin: 0;
+			align-self: center;
+			padding: 10px 0;
+			border-bottom: 1px solid #555;
+			text-align: center;
+			letter-spacing: .2em;
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		body .wordle__main .wordle__menu .wordle__menu-button{
+			width: 100%;
+			height: max-content;
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			font-size: 1.3em;
+			padding: 5px 20px;
+			gap: 15px;
+			background-color: transparent;
+			border: none;
+			border-bottom: 1px solid #555;
+		}
+
+		body.dark-mode .wordle__main .wordle__menu .wordle__menu-button {
+			color: #f9f9f9;
+		}
+
+		body .wordle__main .wordle__menu .wordle__menu-button:hover {
+			background-color: rgba(100, 100, 100, 0.1);
+		}
+
+		body .wordle__main .wordle__menu .icon {
+			padding-top: 5px;
+			width: 30px;
+		}
+
+		body .wordle__main .wordle__menu .icon.close-menu, .wordle__credits .icon.close-credits {
+			padding: 0;
+			position: absolute;
+			top: 7px;
+			right: 7px;
+			width: 30px;
+			cursor: pointer;
+		}
+
+		body .wordle__main .wordle__credits .icon.back-to-menu {
+			padding: 0;
+			position: absolute;
+			top: 7px;
+			left: 7px;
+			width: 30px;
+			cursor: pointer;
+		}
+
+		body.dark-mode .wordle__main .wordle__menu .icon, body.dark-mode .wordle__main .wordle__credits .icon, body.dark-mode .wordle__main .wordle__help .icon {
+			filter: invert(100%);
+		}
+
+		body .wordle__main .wordle__menu .icon img {
+			width: 100%;
+			height: 100%;
+		}
+
+		body .wordle__main .wordle__menu .wordle__menu-button .icon.sun {
+			display: none;
+		}
+
+		body.dark-mode .wordle__main .wordle__menu .wordle__menu-button .icon.sun {
+			display: inline-block;
+		}
+
+		body.dark-mode .wordle__main .wordle__menu .wordle__menu-button .icon.moon {
+			display: none;
+		}
+
+		body .wordle__main .wordle__help .icon {
+			cursor: pointer;
+			position: absolute;
+			top: 7px;
+			right: 7px;
+			width: 30px;
+		}
+
+		body .wordle__main .wordle__help .icon img {
+			width: 100%;
+			height: 100%;
+		}
+
+		body .wordle__main .wordle__menu .daltonic-mode {
+			opacity: 0;
+		}
+
+		body.daltonico .wordle__main .wordle__menu .daltonic-mode {
+			opacity: 1;
+		}
+
+		body .wordle__main .wordle__message {
+			animation: show 0.2s forwards;
+			display: flex;
+			flex-flow: column;
+			z-index: 1;
+			position: fixed;
+			max-width: 530px;
+			height: 100%;
+			background-color: rgba(249, 249, 249, 0.9);
+		}
+
+		body .wordle__main .wordle__message div {
+			max-width: 530px;
+		}
+
+		body .wordle__main .wordle__message h2 {
+			margin: 20px 0;
+			text-align: center;
+		}
+
+		body .wordle__main .wordle__message button {
+			color: #fff;
+			margin-top: 10px;
+			margin-left: calc(50% - 73px);
+			border-radius: 5px;
+			width: max-content;
+			padding: 14px 21px 16px;
+			background-color: var(--correct);
+			border: none;
+			cursor: pointer;
+		}
+
+		body .wordle__main .wordle__message h2.wordparraf {
+			text-align: right;
+		}
+
+		body.dark-mode .wordle__main .wordle__message {
+			background-color: rgb(17, 17, 17, 0.9);
+			color: #f9f9f9;
+		}
+
+		body .wordle__main .wordle__message .icon {
+			width: 30px;
+			cursor: pointer;
+			position: absolute;
+			top: 9px;
+			right: 7px;
+		}
+
+		body.dark-mode .wordle__main .wordle__message .icon {
+			filter: invert(100%);
+		}
+
+	@keyframes press {
+		50% {
+			height: 80%;
+			width: 80%;
+			font-size: 1em;
+		} 100% {
+			height: 100%;
+			width: 100%;
+			font-size: auto;
+		}
+	}
+
+	@keyframes expand {
+		50% {
+			height: 65px;
+			width: 65px;
+			font-size: 2.3em;
+		} 100% {
+			height: 55px;
+			width: 55px;
+			font-size: auto;
+		}
+	}
+
+	@keyframes show {
+		0% {
+			top: -100%;
+		} 100% {
+			top: 0;
+		}
+	}
+
+	@keyframes close {
+		0% {
+			top: 0;
+		} 100% {
+			top: -100%;
+		}
+	}

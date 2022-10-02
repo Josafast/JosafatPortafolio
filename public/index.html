@@ -3,126 +3,81 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="x-ua-compatible" content="ie-edge">
-	<link rel="shortcut icon" type="image/icon" href="img/favicon.ico">
-	<link rel="stylesheet" href="/css/normalize.css">
-	<link rel="stylesheet" href="/css/style.css">
-	<title>Sign up or Log in</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="shortcut icon" type="image/icon" href="img/icons/favicon.ico"/>
+	<title>Wordle</title>
 </head>
 <body class="body">
 
-	<span class="Demoinfo">
-		<ion-icon name="information"></ion-icon>
-		<p>
-			Correo (demo): <b style="font-weight: 700;">demouser@email.com</b><br>
-			Contraseña (demo): <b class="demoPassword" style="font-weight: 700;"></b>
-		</p>
-	</span>
-
-	<span class="help">
-		<img src="img/help.svg" alt="help">
-	</span>
-
-	<div class="message"></div>
-
-	<div class="box">
-		<div class="log">
-			<h1>¿Ya tienes una cuenta?</h1>
-			<button>Ingresa</button>
+	<main class="wordle__main">
+		<div>
+			<div class="wordle__head">
+				<span class="icon help"><img src="img/svg/help-outline.svg" alt="insertar SVG con la etiqueta image"></span>
+				<h1 class="wordle__title">WORDLE</h1>
+				<span class="icon menu"><img src="img/svg/menu-outline.svg"></span>
+			</div>
+			<h2 class="wordle__word-type">PALABRA FÁCIL</h2>
 		</div>
-		<div class="sign">
-			<h1>¿No tienes una cuenta?</h1>
-			<button>Regístrate</button>
+		<div class="wordle__word-box">
+			<div class="wordle__word-letters">
+				<h3 class="wordle__word-letter incorrect">J</h3>
+				<h3 class="wordle__word-letter not-here">O</h3>
+			</div>
+			<div class="wordle__word-letters">
+				<h3 class="wordle__word-letter correct">J</h3>
+				<h3 class="wordle__word-letter"></h3>
+			</div>
 		</div>
-		<div class="type">
-			<form class="loger formulario" id="loger">
-				<h2>Ingresa</h2>
-				<label for="login-email">
-					<input type="email" placeholder="Correo electrónico" id="login-email" name="login-email">
-				</label>
-				<div class="passwords">
-					<label for="login-password">
-						<input type="password" placeholder="Contraseña" class="password" id="login-password" name="login-password">
-						<span class="visible">
-							<ion-icon name="eye-outline"></ion-icon>
-						</span>
-						<span class="not-visible" style="display:none;">
-							<ion-icon name="eye-off-outline"></ion-icon>
-						</span>
-					</label>
-				</div>
-				<button id="login" type="submit">Ingresar</button>
-				<a href="#">¿Olvidaste tu contraseña?</a>
-			</form>
-			<form class="signer formulario" id="signer">
-				<h2>Regístrate</h2>
-				<label for="sign-user">
-					<input type="text" placeholder="Nombre de usuario" id="sign-user" name="sign-user">
-				</label>
-				<label for="sign-email">
-					<input type="email" placeholder="Correo electrónico" id="sign-email" name="sign-email">
-				</label>
-				<label for="sign-password">
-					<div class="passwords">
-						<input type="password" placeholder="Contraseña" class="password" id="sign-password" name="sign-password">
-						<span class="visible">
-							<ion-icon name="eye-outline"></ion-icon>
-						</span>
-						<span class="not-visible" style="display:none;">
-							<ion-icon name="eye-off-outline"></ion-icon>
-						</span>
-					</div>
-				</label>
-				<label for="sign-password-confirm">
-					<div class="passwords">
-						<input type="password" placeholder="Confirmar contraseña" class="password" id="sign-password-confirm" name="sign-password-confirm">
-						<span class="visible">
-							<ion-icon name="eye-outline"></ion-icon>
-						</span>
-						<span class="not-visible" style="display:none;">
-							<ion-icon name="eye-off-outline"></ion-icon>
-						</span>
-					</div>
-				</label>
-				<button id="signup">Registrarse</button>
-			</form>
+		<div class="wordle__keyboard">
+				<button class="wordle__key" id="Q">Q</button>
+				<button class="wordle__key" id="W">W</button>
+				<button class="wordle__key" id="E">E</button>
+				<button class="wordle__key" id="R">R</button>
+				<button class="wordle__key" id="T">T</button>
+				<button class="wordle__key" id="Y">Y</button>
+				<button class="wordle__key" id="U">U</button>
+				<button class="wordle__key" id="I">I</button>
+				<button class="wordle__key" id="O">O</button>
+				<button class="wordle__key" id="P">P</button>
+
+				<button class="wordle__key" id="A">A</button>
+				<button class="wordle__key" id="S">S</button>
+				<button class="wordle__key" id="D">D</button>
+				<button class="wordle__key" id="F">F</button>
+				<button class="wordle__key" id="G">G</button>
+				<button class="wordle__key" id="H">H</button>
+				<button class="wordle__key" id="J">J</button>
+				<button class="wordle__key" id="K">K</button>
+				<button class="wordle__key" id="L">L</button>
+				<button class="wordle__key" id="Ñ">Ñ</button>
+
+			<div>
+				<button class="wordle__key Enter" id="ENTER"><img src="img/svg/return-down-back-outline.svg"></button>
+				<button class="wordle__key" id="Z">Z</button>
+				<button class="wordle__key" id="X">X</button>
+				<button class="wordle__key" id="C">C</button>
+				<button class="wordle__key" id="V">V</button>
+				<button class="wordle__key" id="B">B</button>
+				<button class="wordle__key" id="N">N</button>
+				<button class="wordle__key" id="M">M</button>
+				<button class="wordle__key Back" id="BACKSPACE"><img src="img/svg/backspace-outline.svg"></button>		
+			</div>
 		</div>
-	</div>
-	<footer class="footer">
-		<span class="close">
-			<img src="img/close.svg" alt="close">
-		</span>
-		<a href="https://github.com/Josafast" target="_blank">
-			<img src="img/jfastSFX.svg" alt="Josafast logo">
-		</a>
-		<p>Todos los derechos reservados para "Ionic" y el uso de sus iconos "Ion-icons" &#169; <b class="year"></b></p>
-		<br><br><br><br>
-		<p class="demoInfo">
-			Usuario de prueba: <br><br>
-			Correo electrónico: <b style="font-weight: 700;">demouser@email.com</b> <br>
-			Contraseña: <b class="demoPassword" style="font-weight: 700;"></b>
-		</p>
-		<a href="https://github.com/Josafast?tab=repositories" target="_blank">
-			<img src="img/logo-github.svg" alt="logo github">
-		</a>
-	</footer>
+		<div class="wordle__footer" style="display:none;">
+			<a href="https://github.com/Josafast">
+				<img src="img/icons/jfastSFX.svg" alt="Josafast logo">
+			</a>
+			<a href="https://josafast.github.io/JWordle">
+				<img src="img/icons/logo-github.svg" alt="Github repo">
+			</a>
+		</div>
+	</main>
 
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-	<script src="js/main.js"></script>
-	<script src="js/mensaje.js"></script>
-	<script>
-		document.querySelector('.year').textContent = new Date().getFullYear();
-
-		document.querySelector('.close').addEventListener("click",()=>{
-			document.querySelector('footer').classList.remove('active');
-		});
-
-		document.querySelector('.help').addEventListener("click",()=>{
-			document.querySelector('footer').classList.add('active');
-		});
-	</script>
+	<script charset="UTF-8" src="js/main.js"></script>
 
 </body>
 </html>
