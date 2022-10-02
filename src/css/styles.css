@@ -319,7 +319,6 @@
 		}
 
 		body .wordle__main .wordle__help, .wordle__menu, .wordle__credits {
-			overflow-y: auto;
 			padding: 0;
 			position: fixed;
 			display: flex;
@@ -453,6 +452,7 @@
 		}
 
 		body .wordle__main .wordle__menu .wordle__menu-button{
+			text-align: start;
 			width: 100%;
 			height: max-content;
 			display: flex;
