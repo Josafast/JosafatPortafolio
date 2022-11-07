@@ -57,7 +57,7 @@ b {
 }
 
 .portafolio__header.sticky-mode {
-  top: calc(-100vh - 80px);
+  top: -100vh;
 }
 
 .portafolio__header.sticky-mode img {
