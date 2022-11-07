@@ -84,6 +84,7 @@ b {
 }
 
 .first-down {
+  z-index: 10000000;
   transition: .7s;
   cursor: pointer;
   position: fixed;
@@ -99,6 +100,7 @@ b {
 }
 
 .first-up {
+  z-index: 10000000;
   transition: .7s;
   opacity: 0;
   cursor: pointer;
@@ -115,7 +117,7 @@ b {
 }
 
 .portafolio__header.sticky-mode .first-down {
-  bottom: 100%;
+  bottom: 110%;
 }
 
 .down-icon, .up-icon {
