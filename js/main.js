@@ -91,6 +91,8 @@ window.addEventListener('load',()=>{
 
   document.querySelectorAll('.portafolio__menu').forEach(button=>{
     button.addEventListener('click',(e)=>{
+      document.querySelector('.proyect-demo').classList.remove('active');
+
       if (e.target.parentElement.classList.contains('home')) {window.scroll(0,0);return;}  
 
       if (e.target.parentElement.classList.contains('menu')){
