@@ -88,7 +88,7 @@ b {
   transition: .7s;
   cursor: pointer;
   position: fixed;
-  top: 15px;
+  bottom: 15px;
   display: flex;
   width: 97vw;
   height: 45px;
@@ -117,7 +117,7 @@ b {
 }
 
 .portafolio__header.sticky-mode .first-down {
-  top: -100px;
+  bottom: 100%;
 }
 
 .down-icon, .up-icon {

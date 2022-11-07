@@ -48,6 +48,10 @@ if (window.innerWidth >= 991){
 }
 
 window.addEventListener('load',()=>{
+  document.querySelector('#user').addEventListener('click',()=>{
+    document.querySelector('.portafolio__header').classList.add('sticky-mode');
+    document.querySelector('.portafolio__header').classList.add('transparent');
+  })
 
   window.addEventListener('resize',()=>{
     if (window.innerWidth >= 991){
