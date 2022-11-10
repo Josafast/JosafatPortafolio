@@ -668,6 +668,20 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
 }
 
 @media screen and (max-width: 455px){
+  .proyect-demo-lenguages {
+    width: 200px;
+  }
+
+  .proyect-demo-lenguages .proyect-demo-lenguages__percent-grade {
+    justify-content: space-between;
+    width: 180px;
+    margin-right: 12px
+  }
+
+  .proyect-demo-lenguages .proyect-demo-lenguages__percent {
+    width: 200px;
+  }
+
   .proyect-demo-lenguages .proyect-demo-lenguages__percent span {
     width: 11vw;
     height: 11vw;
