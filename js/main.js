@@ -43,11 +43,12 @@ let proyects = [
 
 let proyecto = "";
 
-if (window.innerWidth >= 991){
-  document.querySelector('#foto1').style.display = 'none';
-}
-
 window.addEventListener('load',()=>{
+  document.querySelector('#user').src = "img/josafat1.png";
+  
+  if (window.innerWidth >= 991) document.querySelector('#foto1').style.display = 'none';
+  else document.querySelector('#foto1').src = 'img/josafat3.jpg'; 
+
   document.querySelector('#user').addEventListener('click',()=>window.scroll(0, 20));
 
   window.addEventListener('resize',()=>{
@@ -89,7 +90,12 @@ window.addEventListener('load',()=>{
 
   document.querySelectorAll('.portafolio__menu').forEach(button=>{
     button.addEventListener('click',(e)=>{
-      if (e.target.parentElement.classList.contains('home')) {window.scroll(0,0);return;}  
+      if (e.target.parentElement.classList.contains('home')) {
+        document.querySelector('.portafolio__header').classList.remove('sticky-mode');
+        si = 1;
+        window.scroll(0,0);
+        return;
+      }  
 
       if (e.target.parentElement.classList.contains('menu')){
         document.querySelector('.portafolio__nav').classList.add('active');
@@ -131,6 +137,11 @@ window.addEventListener('load',()=>{
     element.addEventListener('click',(e)=>{
       let scrolltop = window.scrollY;
       window.scroll(0,e.target.id == "Home" ? 0 : e.target.id == "AboutMe" ? 20 : e.target.id == "Proyects" ? (window.innerWidth >= 991 ? document.querySelector('.portafolio__main').scrollHeight : window.innerHeight) : window.innerHeight);
+
+      if (e.target.id == 'Home'){
+        document.querySelector('.portafolio__header').classList.remove('sticky-mode');
+        si = 1;
+      }
 
       if (e.target.id == 'ContactMe'){
         document.querySelector('.portafolio__footer').classList.add('active');
@@ -209,9 +220,6 @@ window.addEventListener('load',()=>{
         },1000);
       }
       si = 0;
-    } else {
-      document.querySelector('.portafolio__header').classList.remove('sticky-mode');
-      si = 1;
     }
 
     if (window.scrollY >= maxiY) {
