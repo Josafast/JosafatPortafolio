@@ -62,8 +62,6 @@ window.addEventListener('load',()=>{
     entrys.forEach(entry=>{
       if (entry.isIntersecting) {
         console.log("Se está viendo la caja: " + entry.target.className.split(' ')[1]);
-        if (entry.target.className.split(' ')[1] == 'aboutme') document.querySelector('.portafolio__header').classList.add('transparent');
-        else document.querySelector('.portafolio__header').classList.remove('transparent');
         document.querySelectorAll('.nav-element').forEach(element=>{
           let navelement = [];
           document.querySelectorAll('.nav-element').forEach(arr=> navelement.push(arr.id.toLowerCase()))
@@ -133,9 +131,6 @@ window.addEventListener('load',()=>{
     element.addEventListener('click',(e)=>{
       let scrolltop = window.scrollY;
       window.scroll(0,e.target.id == "Home" ? 0 : e.target.id == "AboutMe" ? 20 : e.target.id == "Proyects" ? (window.innerWidth >= 991 ? document.querySelector('.portafolio__main').scrollHeight : window.innerHeight) : window.innerHeight);
-      
-      if (e.target.id == 'AboutMe') document.querySelector('.portafolio__header').classList.add('transparent');
-      else document.querySelector('.portafolio__header').classList.remove('transparent');
 
       if (e.target.id == 'ContactMe'){
         document.querySelector('.portafolio__footer').classList.add('active');
@@ -223,10 +218,6 @@ window.addEventListener('load',()=>{
       document.querySelector('.portafolio-finally').style = 'bottom: 0 !important;';
     } else document.querySelector('.portafolio-finally').removeAttribute('style'); 
   });
-
-  if (window.scrollY >= 20){
-    document.querySelector('.portafolio__header').classList.add('transparent');
-  }
 
   window.scroll(0, 0);
 });
