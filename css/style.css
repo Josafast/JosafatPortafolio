@@ -7,7 +7,6 @@
 }
 
 body {
-  overflow: hidden;
   width: 100%;
   flex-direction: column;
   background-color: #222;
@@ -16,15 +15,74 @@ body {
   min-height: 100vh;
 }
 
+body::-webkit-scrollbar {
+  background-color: #333;
+}
+
+body::-webkit-scrollbar-button {
+  display: none;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+body::-webkit-scrollbar-thumb:active {
+  background-color: #999;
+}
+
 b {
   font-weight: 700;
 }
 
 .portafolio-finally {
-  display: none;
+  cursor: pointer;
+  transition: .7s;
+  position: absolute;
+  bottom: -80px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  height: 80px;
+  width: 100%;
+  font-size: 1.6em;
+  background-color: #111;
+}
+
+.portafolio-finally h4 {
+  transition-delay: .7s;
+  transition: .7s;
+  user-select: none;
+}
+
+.portafolio-finally:hover h4 {
+  transition: .7s;
+  color: #222;
+  z-index: 3;
+}
+
+.portafolio-finally::before {
+  transition: 0.7s;
+  content: '';
+  height: 100%;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #FEF165;
+}
+
+.portafolio-finally:hover::before {
+  width: 100%;
 }
 
 .nexter, .backer {
+  opacity: 0;
   transition: .7s;
 }
 
@@ -83,22 +141,6 @@ b {
   bottom: 2px;
 }
 
-.first-down {
-  z-index: 10000000;
-  transition: .7s;
-  cursor: pointer;
-  position: fixed;
-  bottom: 15px;
-  display: flex;
-  width: 97vw;
-  height: 45px;
-  justify-content: center;
-  align-items: center;
-  background-color: #333;
-  border-radius: 100px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
-}
-
 .first-up {
   z-index: 10000000;
   transition: .7s;
@@ -114,10 +156,6 @@ b {
   background-color: #333;
   border-radius: 100px;
   box-shadow: 0 0 20px rgba(0,0,0,0.8);
-}
-
-.portafolio__header.sticky-mode .first-down {
-  bottom: 100%;
 }
 
 .down-icon, .up-icon {
@@ -281,6 +319,11 @@ b {
   text-align: center;
   font-size: 3em;
   font-weight: 700;
+}
+
+.proyects {
+  padding-bottom: 80px;
+  height: calc(100vh + 80px);
 }
 
 .proyects .proyects-menu {
@@ -500,7 +543,7 @@ b {
 }
 
 .proyect-demo.active ~ .portafolio__header.sticky-mode .portafolio__menu.backer, .proyect-demo.active ~ .portafolio__header.sticky-mode .portafolio__menu.nexter {
-  transform: rotate(-90deg);
+  opacity: 1;
 }
 
 .portafolio__footer {
@@ -763,10 +806,6 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
     color: #fff;
   }
 
-  .portafolio__header.sticky-mode.transparent .first-down {
-    bottom: 95px;
-  }
-
   .portafolio__header.sticky-mode.transparent::before {
     background-color: rgba(0, 0, 0, 0.4);
   }
@@ -832,26 +871,6 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
     overflow: auto;
   }
 
-  body::-webkit-scrollbar {
-    background-color: #333;
-  }
-
-  body::-webkit-scrollbar-button {
-    display: none;
-  }
-
-  body::-webkit-scrollbar-thumb {
-    background-color: #555;
-  }
-
-  body::-webkit-scrollbar-thumb:hover {
-    background-color: #777;
-  }
-
-  body::-webkit-scrollbar-thumb:active {
-    background-color: #999;
-  }
-
   .Soy {
     order: 3 !important;
   }
@@ -872,10 +891,6 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
 
   .portafolio__header .portafolio__header-profile img {
     margin-top: 0;
-  }
-
-  .portafolio__header .first-down {
-    display: none;
   }
 
   .portafolio__header .portafolio__header-profile img {
@@ -1106,48 +1121,6 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
   .portafolio__main-sections.proyects {
     justify-content: start;
     flex-direction: column;
-  }
-
-  .portafolio-finally {
-    cursor: pointer;
-    transition: .7s;
-    position: absolute;
-    bottom: -80px;
-    left: 0;
-    display: flex;
-    align-items: center;
-    padding-left: 50px;
-    height: 80px;
-    width: 100%;
-    font-size: 1.6em;
-    background-color: #111;
-  }
-
-  .portafolio-finally h4 {
-    transition-delay: .7s;
-    transition: .7s;
-    user-select: none;
-  }
-
-  .portafolio-finally:hover h4 {
-    transition: .7s;
-    color: #222;
-    z-index: 3;
-  }
-
-  .portafolio-finally::before {
-    transition: 0.7s;
-    content: '';
-    height: 100%;
-    width: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #FEF165;
-  }
-
-  .portafolio-finally:hover::before {
-    width: 100%;
   }
 
   .Soy {
