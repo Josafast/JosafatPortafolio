@@ -216,6 +216,7 @@ window.addEventListener('load',()=>{
         document.querySelector('.portafolio__header').classList.add('sticky-mode');
         document.querySelector('.portafolio__body').style.overflow = "hidden";
         setTimeout(()=>{
+          window.scroll(0,20);
           document.querySelector('.portafolio__body').removeAttribute('style');
         },1000);
       }
