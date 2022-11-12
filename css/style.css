@@ -654,6 +654,26 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
   flex-direction:column;
 }
 
+.portafolio__footer .portafolio__contact-links {
+  list-style: none;
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 1.7em;
+  cursor: pointer;
+  gap: 15px
+}
+
+.portafolio__footer .portafolio__contact-links li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.portafolio__footer .portafolio__contact-links li:hover a {
+  color: #aaa;
+}
+
 @keyframes circle1 {
   0% {
     transform: rotate(0deg) translate(100px) rotate(0deg);
