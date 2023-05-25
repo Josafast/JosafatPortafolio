@@ -26,22 +26,41 @@ let proyects = [
   {
     proyectName: "login",
     name: "Inicio de sesión",
-    description: 'Como cualquier otra página de este tipo, ingresa con un correo electrónico y contraseña o regístralos en el programa. Viene integrado por defecto una cuenta para su demostración. Solo tienes la capacidad de: Cambiar contraseña y borrar tu cuenta. Aquí solo se utiliza además de JavaScript, NodeJs y JSON. Por favor no guardes ningún tipo de información personal.',
-    links: ['https://loginnodejswithjson.herokuapp.com','https://github.com/Josafast/LoginNodejs'],
+    description: 'Una API sencilla de inicio de sesión, posee métodos varios de seguridad como preguntas personales y token de autenticación, hecho en el método MVC con PHP puro conectado a PostgreSQL, también puedes tener amigos y chatear.',
+    links: ['https://loginapiphp.onrender.com','https://github.com/Josafast/LoginNodejs'],
     video: 'video/login.mp4',
-    percent: [60, 30, 60, 100]
+    percent: [80, 30, 60, 70]
   },
   {
     proyectName: "wordle",
     name: "Wordle",
     description: 'Inspirado en el juego de "Josh Wardle". Parecido a un crucigrama, recibirás pistas que te ayuden a encontrar la palabra escondida y ganar. Hecho en JavaScript puro. También posee un "Modo Oscuro" y un "Modo para Daltónicos".',
-    links: ['http://jwordlee.herokuapp.com','https://github.com/Josafast/JWordle'],
+    links: ['http://jwordle.onrender.com','https://github.com/Josafast/JWordle'],
     video: 'video/wordle.mp4',
-    percent: [10, 30, 50, 100]
+    percent: [0, 30, 50, 100]
   },
 ];
 
 let proyecto = "";
+
+const getProyect = proyect=>{
+  proyecto = proyect.proyectName;
+
+  document.querySelector('.proyect-demo').classList.add('active');
+  document.querySelector('.proyect-demo-title').textContent = proyect.name;
+  document.querySelector('.proyect-demo-description').textContent = proyect.description;
+  document.querySelector('.proyect-link').setAttribute("href",proyect.links[0]);
+  document.querySelector('.proyect-repo').setAttribute("href",proyect.links[1]);
+  document.querySelector('.video').src = proyect.video;
+  console.log('hi');
+  for(let i=0; i<4; i++){
+    let tamaño = window.innerWidth <= 455 ? document.querySelector('.proyect-demo-lenguages__percent').children[i].clientHeight : 55;
+    let tamañoIcono = document.querySelector('.proyect-demo-lenguages__percent').children[i].classList.contains('one') ? 24 : 512;
+    document.querySelector('.proyect-demo-lenguages__percent-grade').children[i].textContent = proyect.percent[i] + '%';
+    document.querySelector('.proyect-demo-lenguages__percent').children[i].style.top = `${proyect.percent[i] != 0 ? tamaño-(proyect.percent[i]*tamaño/100) : 0}px`;
+    document.querySelector('.proyect-demo-lenguages__percent').children[i].children[0].setAttribute('viewBox',`0 ${proyect.percent[i] != 0 ? (100-proyect.percent[i])*tamañoIcono/100 : tamañoIcono} ${tamañoIcono} ${tamañoIcono}`);
+  }
+}
 
 window.addEventListener('load',()=>{
   document.querySelector('#user').src = "img/josafat1.png";
@@ -106,21 +125,7 @@ window.addEventListener('load',()=>{
         let page = proyects.findIndex(element=>element.proyectName == proyecto);
         page = e.target.parentElement.classList.contains('backer') ? page-1 : page+1;
         let proyect = proyects[e.target.parentElement.classList.contains('backer') ? (page == -1 ? proyects.length-1 : page) : (page == proyects.length ? 0 : page)];
-        proyecto = proyect.proyectName;
-
-        document.querySelector('.proyect-demo').classList.add('active');
-        document.querySelector('.proyect-demo-title').textContent = proyect.name;
-        document.querySelector('.proyect-demo-description').textContent = proyect.description;
-        document.querySelector('.proyect-link').setAttribute("href",proyect.links[0]);
-        document.querySelector('.proyect-repo').setAttribute("href",proyect.links[1]);
-        document.querySelector('.video').src = proyect.video;
-        for(let i=0; i<4; i++){
-          let tamaño = window.innerWidth <= 455 ? document.querySelector('.proyect-demo-lenguages__percent').children[i].clientHeight : 55;
-          document.querySelector('.proyect-demo-lenguages__percent-grade').children[i].textContent = proyect.percent[i] + '%';
-          document.querySelector('.proyect-demo-lenguages__percent').children[i].style.top = `${proyect.percent[i] != 0 ? tamaño-(proyect.percent[i]*tamaño/100) : 0}px`;
-          document.querySelector('.proyect-demo-lenguages__percent').children[i].children[0].setAttribute('viewBox',`0 ${proyect.percent[i] != 0 ? (100-proyect.percent[i])*512/100 : 512} 512 512`);
-        }
-        return;
+        getProyect(proyect);
       }
     });
   });
@@ -154,19 +159,7 @@ window.addEventListener('load',()=>{
   document.querySelectorAll('.proyect-info').forEach(element=>{
     element.addEventListener('click',function (){
       let proyect = proyects[proyects.findIndex(element=>element.proyectName == this.id)];
-
-      document.querySelector('.proyect-demo').classList.add('active');
-      document.querySelector('.proyect-demo-title').textContent = proyect.name;
-      document.querySelector('.proyect-demo-description').textContent = proyect.description;
-      document.querySelector('.proyect-link').setAttribute("href",proyect.links[0]);
-      document.querySelector('.proyect-repo').setAttribute("href",proyect.links[1]);
-      document.querySelector('.video').src = proyect.video;
-      for(let i=0; i<4; i++){
-        let tamaño = window.innerWidth <= 455 ? document.querySelector('.proyect-demo-lenguages__percent').children[i].clientHeight : 55;
-        document.querySelector('.proyect-demo-lenguages__percent-grade').children[i].textContent = proyect.percent[i] + '%';
-        document.querySelector('.proyect-demo-lenguages__percent').children[i].style.top = `${proyect.percent[i] != 0 ? tamaño-(proyect.percent[i]*tamaño/100) : 0}px`;
-        document.querySelector('.proyect-demo-lenguages__percent').children[i].children[0].setAttribute('viewBox',`0 ${proyect.percent[i] != 0 ? (100-proyect.percent[i])*512/100 : 512} 512 512`);
-      }
+      getProyect(proyect);
     });
   });
 
@@ -180,20 +173,7 @@ window.addEventListener('load',()=>{
       });
 
       let proyect = proyects[proyects.findIndex(element=>element.proyectName == this.classList[1])];
-      proyecto = proyect.proyectName;
-
-      document.querySelector('.proyect-demo').classList.add('active');
-      document.querySelector('.proyect-demo-title').textContent = proyect.name;
-      document.querySelector('.proyect-demo-description').textContent = proyect.description;
-      document.querySelector('.proyect-link').setAttribute("href",proyect.links[0]);
-      document.querySelector('.proyect-repo').setAttribute("href",proyect.links[1]);
-      document.querySelector('.video').src = proyect.video;
-      for(let i=0; i<4; i++){
-        let tamaño = window.innerWidth <= 455 ? document.querySelector('.proyect-demo-lenguages__percent').children[i].clientHeight : 55;
-        document.querySelector('.proyect-demo-lenguages__percent-grade').children[i].textContent = proyect.percent[i] + '%';
-        document.querySelector('.proyect-demo-lenguages__percent').children[i].style.top = `${proyect.percent[i] != 0 ? tamaño-(proyect.percent[i]*tamaño/100) : 0}px`;
-        document.querySelector('.proyect-demo-lenguages__percent').children[i].children[0].setAttribute('viewBox',`0 ${proyect.percent[i] != 0 ? (100-proyect.percent[i])*512/100 : 512} 512 512`);
-      }
+      getProyect(proyect);
     });
   });
 

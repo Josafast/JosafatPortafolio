@@ -530,7 +530,7 @@ b {
 }
 
 .proyect-demo-lenguages .proyect-demo-lenguages__percent span:nth-child(1) svg{
-  filter: invert(65%) sepia(66%) saturate(626%) hue-rotate(39deg) brightness(91%) contrast(110%);
+  filter: invert(0%);
 }
 
 .proyect-demo-lenguages .proyect-demo-lenguages__percent span:nth-child(2) svg{
@@ -1038,75 +1038,6 @@ body.dark-mode .portafolio__footer .circle-one, body.dark-mode .portafolio__foot
     width: 600px;
   }
 
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects #proyects {
-    margin: 1vh 0 100px;
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu {
-    margin: 200px 0 0;
-    padding: 0;
-    align-items: start;
-    justify-content: start;
-    width: 900px;
-    height: 60px;
-    position: absolute;
-    left: calc(50% - 450px);
-    animation: showProyects .3s forwards .5s;
-  }
-
-  @keyframes showProyects {
-    0% {
-      margin: 150px 0 0;
-    }
-
-    100% {
-      margin: 87px 0 0;
-    }
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu .proyect-icons {
-    transition: .3s;
-    background-color: #FEF165;
-    position: relative;
-    left: 0;
-    justify-content: start;
-    padding: 0;
-    height: 60px;
-    width: 100%;
-    border-radius: 0;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .7);
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu .proyect-icons .proyect-icon {
-    height: 60px;
-    background-color: transparent;
-    flex-grow: 1;
-    border-radius: 0;
-    margin: 0;
-    border: none;
-    font-size: .8em;
-    transition: .3s;
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu .proyect-icons .proyect-icon.wordle {
-    font-size: .6em;
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu .proyect-icons .proyect-icon.wordle::before {
-    width: 30px;
-    height: 30px;
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu .proyect-icons .proyect-icon.visualizate {
-    height: 80px;
-    padding-bottom: 10px;
-    background-color: #333;
-    color:rgb(252, 252, 122);
-  }
-
-  .proyect-demo.active ~ .portafolio__main .portafolio__main-sections.proyects .proyects-menu .proyect-icons .proyect-icon.wordle.visualizate::before{
-    border-color: #FEF165;
-  }
 
   .aboutme ul {
     column-gap: 50px;
